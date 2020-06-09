@@ -22,10 +22,11 @@
 
     <style name="AppTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary" />
 
-    <style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout.Colored">
+    <style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
 
         <item name="tabIndicatorHeight">3dp</item>
         <item name="tabIndicatorColor">@color/color_secondary</item>
+        <item name="android:background">@color/color_on_background</item>
     </style>
 
 </resources>
