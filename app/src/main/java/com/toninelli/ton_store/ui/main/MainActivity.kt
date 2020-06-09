@@ -1,11 +1,14 @@
-package com.toninelli.ton_store
+package com.toninelli.ton_store.ui.main
 
 import android.os.Bundle
 import android.view.Menu
-import androidx.navigation.findNavController
+import android.view.MenuItem
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.onNavDestinationSelected
+import com.toninelli.ton_store.R
 import com.toninelli.ton_store.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -28,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.main_nav_host_fragment)
 
         val topLevelDestination = setOf(
-            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+            R.id.mainFragment
+        )
 
         val appBarConfiguration = AppBarConfiguration(topLevelDestination, drawer_layout)
 
@@ -42,8 +46,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_home, menu)
+        menuInflater.inflate(R.menu.menu_toolbar_home, menu)
         return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = findNavController(R.id.main_nav_host_fragment)
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+    }
+
+
 
 }

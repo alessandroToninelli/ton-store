@@ -22,4 +22,10 @@
 
     <style name="AppTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary" />
 
+    <style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout.Colored">
+
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabIndicatorColor">@color/color_secondary</item>
+    </style>
+
 </resources>

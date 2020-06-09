@@ -3,24 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_home">
+    app:startDestination="@id/mainFragment">
+
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.toninelli.ton_store.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home">
-    </fragment>
-
+        android:id="@+id/mainFragment"
+        android:name="com.toninelli.ton_store.ui.main.MainFragment"
+        android:label="@string/label_app"
+        tools:layout="@layout/fragment_main" />
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.toninelli.ton_store.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/catalogFragment"
+        android:name="com.toninelli.ton_store.ui.main.catalog.CatalogFragment"
+        android:label="@string/label_catalog"
+        tools:layout="@layout/fragment_catalog" />
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.toninelli.ton_store.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/homeFragment"
+        android:name="com.toninelli.ton_store.ui.main.home.HomeFragment"
+        android:label="@string/label_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/offerFragment"
+        android:name="com.toninelli.ton_store.ui.main.offer.OfferFragment"
+        android:label="@string/label_offer"
+        tools:layout="@layout/fragment_offer" />
+    <fragment
+        android:id="@+id/lastArrivedFragment"
+        android:name="com.toninelli.ton_store.ui.main.lastarrived.LastArrivedFragment"
+        android:label="@string/label_last_arrived"
+        tools:layout="@layout/fragment_last_arrived" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.toninelli.ton_store.ui.main.search.SearchFragment"
+        android:label="@string/label_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>
