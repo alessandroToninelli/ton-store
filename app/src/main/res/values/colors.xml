@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#34495e</color>
+    <color name="color_primary_variant">#3498DB</color>
+    <color name="color_on_primary">#FFFFFF</color>
+    <color name="color_secondary">#1ABC9C</color>
+    <color name="color_secondary_variant">#2ECC71</color>
+    <color name="color_on_secondary">#FFFFFF</color>
+    <color name="color_error">#FF7961</color>
+    <color name="color_on_error">#FFFFFF</color>
+
+    //drawer
+    <color name="color_surface">#FFFFFF</color>
+    <color name="color_on_surface">#000000</color>
+
+    //background
+    <color name="color_background">#E1E7E9</color>
+    <color name="color_on_background">#FFFFFF</color>
+
+    //status bar
+    <color name="color_status_bar">#000000</color>
 </resources>
