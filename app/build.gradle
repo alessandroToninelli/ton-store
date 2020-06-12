@@ -57,6 +57,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.google.code.gson:gson:$gson_version"
     implementation "com.ale.lib:networkcalladapterlib:$networkcall_version"
+    implementation("com.squareup.okhttp3:logging-interceptor:$interceptor_version")
+
+    //paging
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     //coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
@@ -79,6 +83,7 @@ dependencies {
 
     //koin
     implementation "org.koin:koin-core:$koin_version"
+    implementation "org.koin:koin-core-ext:$koin_version"
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
