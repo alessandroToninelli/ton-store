@@ -7,7 +7,7 @@ data class Beer(
     val brewers_tips: String,
     val contributed_by: String,
     val description: String,
-    val ebc: Int,
+    val ebc: Double,
     val first_brewed: String,
     val food_pairing: List<String>,
     val ibu: Double,

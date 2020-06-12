@@ -28,12 +28,9 @@ class CatalogItemAdapter(val scope: CoroutineScope) : BasePagedAdapter<Beer,Item
 }), BindableListAdapterData<PagingData<Beer>> {
 
 
-    var cout = 0
 
     override fun onBindViewHolder(binding: ItemBeerBinding, item: Beer?, position: Int) {
         binding.beer = item
-        cout ++
-        println(cout)
     }
 
     override fun inflateViewBind(parent: ViewGroup, viewType: Int): ItemBeerBinding {

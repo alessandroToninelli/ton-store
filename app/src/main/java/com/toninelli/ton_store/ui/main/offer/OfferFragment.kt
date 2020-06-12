@@ -1,15 +1,11 @@
 package com.toninelli.ton_store.ui.main.offer
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import com.toninelli.ton_store.R
+import com.toninelli.ton_store.vo.Status
 
 
-class OfferFragment : Fragment(R.layout.fragment_offer) {
+class OfferFragment(onLoading: (Status) -> Unit) : Fragment(R.layout.fragment_offer) {
 
 //    override fun onResume() {
 //        super.onResume()

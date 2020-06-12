@@ -22,9 +22,7 @@ class RepoImpl(val api: RemoteApi): Repository {
 
 
     override  suspend fun getBeers(): Flow<PagingData<Beer>> {
-        val pager = PageDataSource.build(10) {
-            println(it.loadSize)
-            println(it.key)
+        val pager = PageDataSource.build(40, 1) {
             with(api.getBeers(it.key ?: 1, it.loadSize)) {
                 when (this) {
                     is ResponseNetworkSuccess -> right(this.body)

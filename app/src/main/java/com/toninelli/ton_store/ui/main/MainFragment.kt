@@ -2,13 +2,8 @@ package com.toninelli.ton_store.ui.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.adapter.FragmentViewHolder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.toninelli.ton_store.R
 import com.toninelli.ton_store.databinding.FragmentMainBinding
@@ -17,15 +12,21 @@ import com.toninelli.ton_store.ui.main.home.HomeFragment
 import com.toninelli.ton_store.ui.main.lastarrived.LastArrivedFragment
 import com.toninelli.ton_store.ui.main.offer.OfferFragment
 import com.toninelli.ton_store.util.autoCleared
+import com.toninelli.ton_store.vo.Status
 
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private var binding by autoCleared<FragmentMainBinding>()
 
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMainBinding.bind(view)
+
+
 
         val pagerAdapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int = 4
@@ -33,11 +34,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             override fun createFragment(position: Int): Fragment {
 
                 return when (position) {
-                    0 -> HomeFragment()
-                    1 -> CatalogFragment()
-                    2 -> LastArrivedFragment()
-                    3 -> OfferFragment()
-                    else -> HomeFragment()
+                    0 -> HomeFragment(onLoading)
+                    1 -> CatalogFragment(onLoading)
+                    2 -> LastArrivedFragment(onLoading)
+                    3 -> OfferFragment(onLoading)
+                    else -> HomeFragment(onLoading)
                 }
             }
 
@@ -55,6 +56,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
             tab.text = getString(titleId)
         }.attach()
+    }
+
+    val onLoading : (Status) -> Unit  = {
+        binding.status = it
     }
 
 }

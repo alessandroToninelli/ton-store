@@ -5,12 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.databinding.BindingAdapter
+import androidx.databinding.BindingConversion
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.toninelli.ton_store.vo.Resource
+import com.toninelli.ton_store.vo.Status
 import com.toninelli.ton_store.vo.case
 import kotlinx.coroutines.flow.Flow
 
@@ -46,15 +50,17 @@ fun <T> showError(view: TextInputLayout, resource: Resource<T>?) {
     )
 }
 
+@BindingConversion
+fun convertLoadStateToStatus(states: CombinedLoadStates?): Status? {
+    val isError = states?.refresh is LoadState.Error
+    val isLoading = states?.refresh is LoadState.Loading
+    return when {
+        isError -> Status.ERROR
+        isLoading -> Status.LOADING
+        else -> Status.SUCCESS
+    }
 
-//@BindingAdapter("showBooleanResult")
-//fun showBooleanResult(view: ViewGroup, result: Resource<SingleEventWrapper<BooleanResult>>?) {
-//    result?.let {
-//            it.data?.getContent()?.let {
-//                Snackbar.make(view, it.msg, Snackbar.LENGTH_SHORT).show()
-//            }
-//    }
-//}
+}
 
 
 @Suppress("UNCHECKED_CAST")

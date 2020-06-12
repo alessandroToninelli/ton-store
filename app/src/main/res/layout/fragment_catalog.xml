@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+
         <variable
             name="model"
             type="com.toninelli.ton_store.ui.main.catalog.CatalogViewModel" />
@@ -16,13 +17,19 @@
         android:orientation="vertical"
         tools:context=".ui.main.catalog.CatalogFragment">
 
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
+            adapterResourceData="@{model.beer}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            adapterResourceData="@{model.beer}"
-            />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </LinearLayout>

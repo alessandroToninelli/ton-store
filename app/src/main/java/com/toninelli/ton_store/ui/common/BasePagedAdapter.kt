@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.toninelli.ton_store.databinding.ItemBeerBinding
 
 abstract class BasePagedAdapter<Item, Binding>(
-    private val diffCallback: DiffUtil.ItemCallback<Item>
+    diffCallback: DiffUtil.ItemCallback<Item>
 ) : PagingDataAdapter<Item, BasePagedAdapter.PagedBaseViewHolder<Binding>>(diffCallback) where Binding : ViewDataBinding, Item : Any {
 
     protected lateinit var binding: Binding
