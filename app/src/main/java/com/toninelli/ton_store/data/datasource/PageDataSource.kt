@@ -20,12 +20,8 @@ abstract class PageDataSource<Type : Any> private constructor(var initialPage: I
 
         when(params){
             is LoadParams.Refresh -> {
-                println("refresh")
                 initialPage = startPage
             }
-            is LoadParams.Append -> { println("append")}
-            is LoadParams.Prepend -> {
-                println("prepend")}
         }
         getCall(params).either(
             {

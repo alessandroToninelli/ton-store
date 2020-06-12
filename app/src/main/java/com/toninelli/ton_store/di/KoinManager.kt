@@ -12,7 +12,8 @@ class KoinManager: KoinComponent {
                 listOf(
                     DataModule.netModule,
                     DataModule.repoModule,
-                    UiModule.mainActivityModule
+                    UiModule.mainActivityModule,
+                    BusinessModule.useCaseModule
                 )
             )
         }

@@ -41,7 +41,7 @@ object DataModule {
     }
 
     val repoModule = module {
-        singleBy<Repository, RepoImpl>(named("net"))
+        singleBy<Repository, RepoImpl>()
 
     }
 

@@ -7,16 +7,24 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.toninelli.ton_store.R
+import com.toninelli.ton_store.business.TestUseCase
 import com.toninelli.ton_store.databinding.FragmentCatalogBinding
 import com.toninelli.ton_store.util.autoCleared
 import com.toninelli.ton_store.util.toStatus
 import com.toninelli.ton_store.vo.Status
+import kotlinx.android.synthetic.main.fragment_catalog.*
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.androidx.scope.lifecycleScope as koinScope
 import org.koin.androidx.viewmodel.scope.viewModel
 
-class CatalogFragment(private val onLoading: (Status) -> Unit) : Fragment(R.layout.fragment_catalog) {
+class CatalogFragment(private val onLoading: (Status) -> Unit) :
+    Fragment(R.layout.fragment_catalog) {
 
     val model: CatalogViewModel by koinScope.viewModel(this)
 
@@ -29,8 +37,6 @@ class CatalogFragment(private val onLoading: (Status) -> Unit) : Fragment(R.layo
         binding.lifecycleOwner = viewLifecycleOwner
         binding.model = model
 
-        model.getPosts()
-
         catalogItemAdapter = CatalogItemAdapter(lifecycleScope)
         binding.list.adapter = catalogItemAdapter
 
@@ -42,10 +48,15 @@ class CatalogFragment(private val onLoading: (Status) -> Unit) : Fragment(R.layo
         super.onActivityCreated(savedInstanceState)
 
         lifecycleScope.launch {
-            catalogItemAdapter.loadStateFlow.collect {
-                onLoading(it.refresh.toStatus())
-                binding.swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
+
+            launch {
+                catalogItemAdapter.loadStateFlow.collect {
+                    onLoading(it.refresh.toStatus())
+                    binding.swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
+                }
             }
+
+
         }
     }
 
