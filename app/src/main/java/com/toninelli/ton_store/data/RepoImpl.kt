@@ -7,9 +7,12 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.networkcalladapterlib.*
+import com.toninelli.ton_store.data.api.ApiMock
 import com.toninelli.ton_store.data.api.RemoteApi
 import com.toninelli.ton_store.data.datasource.PageDataSource
+import com.toninelli.ton_store.model.Article
 import com.toninelli.ton_store.model.Beer
+import com.toninelli.ton_store.util.either
 import com.toninelli.ton_store.vo.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -17,9 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 import okhttp3.ResponseBody
 import kotlin.coroutines.coroutineContext
 
-class RepoImpl(val api: RemoteApi): Repository {
-
-
+class RepoImpl(val api: RemoteApi, val apiMock: ApiMock): Repository {
 
 
     override  suspend fun getBeers(): Flow<Either<Failure, PagingData<Beer>>> {
@@ -30,7 +31,7 @@ class RepoImpl(val api: RemoteApi): Repository {
                     is ResponseNetworkSuccessEmpty -> left(Failure.EmptyData())
                     is ResponseNetworkError -> left(Failure.NetworkFailure(this.code))
                     is ResponseNetworkIOFailure -> left(Failure.NoConnection)
-                    is ResponseNetworkUnknownError -> left(Failure.UnknownError(this.error?.localizedMessage))
+                    is ResponseNetworkUnknownError -> left(Failure.NoConnection)
                 }
             }
         }.flow
@@ -41,6 +42,16 @@ class RepoImpl(val api: RemoteApi): Repository {
     override suspend fun test(): Either<Failure, Int> {
         println("repo : ${Thread.currentThread()}")
         return right(3)
+    }
+
+    override suspend fun articleLastArrived(): Either<Failure, List<Article>> {
+        return apiMock.lastArrived(3).either(
+            {
+                right(it.body)
+            },
+            {
+                left(Failure.NetworkFailure(it.code))
+            })
     }
 
 }

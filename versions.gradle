@@ -10,5 +10,6 @@ ext {
     koin_version = "2.1.5"
     interceptor_version = "4.2.1"
     paging_version = "3.0.0-alpha01"
+    store_version = "4.0.0-alpha06"
 
 }

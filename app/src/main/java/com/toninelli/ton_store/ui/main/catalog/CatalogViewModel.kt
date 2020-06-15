@@ -23,9 +23,9 @@ class CatalogViewModel(
 
 
     init {
-        println("inizio")
         exec(beerUseCase)
 //        exec(testUseCase)
+
     }
 
 

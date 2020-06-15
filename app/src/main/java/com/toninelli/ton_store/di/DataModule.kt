@@ -4,10 +4,12 @@ import com.example.networkcalladapterlib.NetworkCallAdapterFactory
 import com.toninelli.ton_store.data.RepoImpl
 import com.toninelli.ton_store.data.api.RemoteApi
 import com.toninelli.ton_store.data.Repository
+import com.toninelli.ton_store.data.api.ApiMock
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.koin.experimental.builder.single
 import org.koin.experimental.builder.singleBy
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -37,6 +39,8 @@ object DataModule {
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build()
         }
+
+        single<ApiMock>()
 
     }
 

@@ -28,7 +28,6 @@ class CatalogFragment(private val onLoading: (Status) -> Unit) :
     Fragment(R.layout.fragment_catalog) {
 
     val model: CatalogViewModel by koinScope.viewModel(this)
-
     private var binding by autoCleared<FragmentCatalogBinding>()
     private var catalogItemAdapter by autoCleared<CatalogItemAdapter>()
 
@@ -58,8 +57,6 @@ class CatalogFragment(private val onLoading: (Status) -> Unit) :
                     binding.swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
                 }
             }
-
-            launch { model.test.collect { println(it) } }
 
 
         }
