@@ -35,7 +35,7 @@ class RepoImpl(val api: RemoteApi): Repository {
             }
         }.flow
 
-        return pager.either { Failure.Error(it.localizedMessage ?: "unknown error") }
+        return pager.either { Failure.Error(msg = it.localizedMessage ?: "unknown error") }
     }
 
     override suspend fun test(): Either<Failure, Int> {

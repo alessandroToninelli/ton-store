@@ -6,7 +6,7 @@ import com.toninelli.ton_store.vo.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface BindableListAdapterData<T> {
-    fun setData(data: Flow<Resource<T>>)
+    fun setData(data: Resource<T>)
 
 }
 

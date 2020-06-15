@@ -65,8 +65,7 @@ fun convertLoadStateToStatus(states: CombinedLoadStates?): Status? {
 
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter("adapterResourceData")
-fun <T> bindAdapterData(view: RecyclerView, resource: Flow<Resource<T>>?) {
-
+fun <T> bindAdapterData(view: RecyclerView, resource: Resource<T>?) {
     resource?.let {
         if (view.adapter is BindableListAdapterData<*>) {
             (view.adapter as BindableListAdapterData<T>).setData(it)

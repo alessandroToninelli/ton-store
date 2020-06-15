@@ -7,6 +7,8 @@ import com.toninelli.ton_store.data.Repository
 import com.toninelli.ton_store.ui.main.MainActivity
 import com.toninelli.ton_store.ui.main.catalog.CatalogFragment
 import com.toninelli.ton_store.ui.main.catalog.CatalogViewModel
+import com.toninelli.ton_store.ui.main.search.SearchFragment
+import com.toninelli.ton_store.ui.main.search.SearchViewModel
 import org.koin.androidx.fragment.dsl.fragment
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,6 +25,9 @@ object UiModule {
                 viewModel { CatalogViewModel(get(), get()) }
             }
 
+            scope<SearchFragment>{
+                viewModel{ SearchViewModel(get())}
+            }
         }
 
     }

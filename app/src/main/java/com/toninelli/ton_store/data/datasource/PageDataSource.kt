@@ -9,10 +9,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-abstract class PageDataSource<Type : Any> private constructor(var initialPage: Int) :
+abstract class PageDataSource<Type : Any> private constructor(private val initialPage: Int) :
     PagingSource<Int, Type>() {
 
-    private val startPage = initialPage
+    private var startPage = 0
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Type> {
 
@@ -20,7 +20,7 @@ abstract class PageDataSource<Type : Any> private constructor(var initialPage: I
 
         when(params){
             is LoadParams.Refresh -> {
-                initialPage = startPage
+                startPage = initialPage
             }
         }
         getCall(params).either(
@@ -28,12 +28,13 @@ abstract class PageDataSource<Type : Any> private constructor(var initialPage: I
                 result = LoadResult.Error(it)
             },
             {
+                startPage = startPage.inc()
                 result = if (it.isEmpty())
                     LoadResult.Error(Failure.EmptyData())
                 else {
                     LoadResult.Page(
                         data = it,
-                        nextKey = initialPage++,
+                        nextKey = startPage,
                         prevKey = null
                     )
                 }

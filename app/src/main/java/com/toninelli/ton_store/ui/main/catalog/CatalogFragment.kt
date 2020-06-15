@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import com.toninelli.ton_store.R
 import com.toninelli.ton_store.business.TestUseCase
@@ -37,13 +38,15 @@ class CatalogFragment(private val onLoading: (Status) -> Unit) :
         binding.lifecycleOwner = viewLifecycleOwner
         binding.model = model
 
-        catalogItemAdapter = CatalogItemAdapter(lifecycleScope)
+
+        catalogItemAdapter = CatalogItemAdapter(viewLifecycleOwner, lifecycleScope)
         binding.list.adapter = catalogItemAdapter
 
         binding.swipeRefresh.setOnRefreshListener { catalogItemAdapter.refresh() }
 
     }
 
+    @ExperimentalPagingApi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -55,6 +58,8 @@ class CatalogFragment(private val onLoading: (Status) -> Unit) :
                     binding.swipeRefresh.isRefreshing = it.refresh is LoadState.Loading
                 }
             }
+
+            launch { model.test.collect { println(it) } }
 
 
         }

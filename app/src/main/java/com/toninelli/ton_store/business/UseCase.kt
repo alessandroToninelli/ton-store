@@ -15,32 +15,48 @@ import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
 import kotlin.coroutines.resume
 
+interface Operation<T> {
+    fun onNextValue(value: T?)
+    fun onError(e: Failure)
+    fun onCompletion()
+}
 
-abstract class UseCase<P, R> : BaseUseCase<P,R>() {
+abstract class UseCase<P, R> : BaseUseCase<P, Either<Failure, R>, R>() {
 
 
-    override suspend fun start(param: P?): Flow<Resource<R>> = callbackFlow {
+    override fun start(param: P?): Flow<Resource<R>> = callbackFlow {
 
-        exec(param) { result ->
-            result.either(
-                {
-                    val resource: Resource<R> = Resource.Error(it)
-                    sendBlocking(resource)
-                    close()
-                },
-                {
-                    val resource: Resource<R> = Resource.Success(it)
-                    sendBlocking(resource)
-                    close()
-                })
-        }
+        exec(param, object : Operation<Either<Failure, R>> {
+            override fun onNextValue(value: Either<Failure, R>?) {
+                value?.either(
+                    {
+                        val resource: Resource<R> = Resource.Error(it)
+                        sendBlocking(resource)
+                    },
+                    {
+                        val resource: Resource<R> = Resource.Success(it)
+                        sendBlocking(resource)
+                    })
+            }
 
-        awaitClose { println("stream chiuso") }
+            override fun onError(e: Failure) {
+                val resource: Resource<R> = Resource.Error(e)
+                sendBlocking(resource)
+                close()
+            }
+
+            override fun onCompletion() {
+                close()
+            }
+
+        })
+
+        awaitClose { println("callbackFlow completed") }
     }
 }
 
 
-abstract class BaseUseCase<P, R> {
+abstract class BaseUseCase<P, O, R> {
 
 
     private val stateFlow = MutableStateFlow<Resource<R>>(Resource.Loading())
@@ -49,18 +65,19 @@ abstract class BaseUseCase<P, R> {
 
     operator fun invoke(param: P?, coroutineScope: CoroutineScope) {
         coroutineScope.launch {
-            start(param).flowOn(Dispatchers.IO).collect { stateFlow.value = it }
-        }
+            start(param).onCompletion { println("start completed $it") }.flowOn(Dispatchers.IO)
+                .collect { stateFlow.value = it }
+        }.invokeOnCompletion { println("use case terminated") }
     }
 
-    protected abstract suspend fun exec(param: P?, onResult: (Either<Failure,R>) -> Unit)
+    protected abstract suspend fun exec(param: P?, operation: Operation<O>)
 
-    abstract suspend fun start(param: P?): Flow<Resource<R>>
+    abstract fun start(param: P?): Flow<Resource<R>>
 }
 
 
-fun <P, R> ViewModel.exec(
-    useCase: BaseUseCase<P, R>,
+fun <P, O, R> ViewModel.exec(
+    useCase: BaseUseCase<P, O, R>,
     param: P? = null,
     scope: CoroutineScope = viewModelScope
 

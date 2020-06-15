@@ -1,6 +1,7 @@
 package com.toninelli.ton_store.ui.main.catalog
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.toninelli.ton_store.business.BeerUseCase
@@ -22,12 +23,15 @@ class CatalogViewModel(
 
 
     init {
+        println("inizio")
         exec(beerUseCase)
+//        exec(testUseCase)
     }
 
 
 
-    val beer = beerUseCase.result
+    val test = testUseCase.result
+    val beer = beerUseCase.result.asLiveData()
 
 
 
