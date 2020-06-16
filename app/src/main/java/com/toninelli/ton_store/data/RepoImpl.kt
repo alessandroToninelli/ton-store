@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 import okhttp3.ResponseBody
 import kotlin.coroutines.coroutineContext
 
-class RepoImpl(val api: RemoteApi, val apiMock: ApiMock): Repository {
+class RepoImpl(val api: RemoteApi): Repository {
 
 
     override  suspend fun getBeers(): Flow<Either<Failure, PagingData<Beer>>> {
@@ -39,13 +39,9 @@ class RepoImpl(val api: RemoteApi, val apiMock: ApiMock): Repository {
         return pager.either { Failure.Error(msg = it.localizedMessage ?: "unknown error") }
     }
 
-    override suspend fun test(): Either<Failure, Int> {
-        println("repo : ${Thread.currentThread()}")
-        return right(3)
-    }
 
     override suspend fun articleLastArrived(): Either<Failure, List<Article>> {
-        return apiMock.lastArrived(3).either(
+        return ApiMock.lastArrived(3).either(
             {
                 right(it.body)
             },

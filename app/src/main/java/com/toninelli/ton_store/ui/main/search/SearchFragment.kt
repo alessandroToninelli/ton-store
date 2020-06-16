@@ -31,9 +31,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        lifecycleScope.launch {
-            model.testResult.collect { println(it) }
-        }
     }
 
 }

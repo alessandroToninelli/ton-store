@@ -11,7 +11,5 @@ interface Repository {
 
      suspend fun getBeers(): Flow<Either<Failure,PagingData<Beer>>>
 
-     suspend fun test(): Either<Failure, Int>
-
      suspend fun articleLastArrived(): Either<Failure, List<Article>>
 }
